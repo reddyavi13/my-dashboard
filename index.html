@@ -4,126 +4,56 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="refresh" content="1800">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enhanced Dashboard</title>
+    <title>Bing with Time Overlay</title>
     <style>
-        body {
-            background-color: #1a1a1a;
-            color: white;
-            font-family: Arial, sans-serif;
+        html, body {
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
         }
-        .section {
-            background: #2a2a2a;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-        h2 {
-            margin-top: 0;
-            border-bottom: 1px solid #555;
-            padding-bottom: 5px;
-        }
-        .clock-box {
-            font-size: 1.4em;
-            margin: 10px 0;
-        }
-        ul {
-            padding-left: 20px;
-        }
-        a {
-            color: #80d0ff;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-        textarea {
+        iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 100px;
-            font-family: inherit;
-            font-size: 1em;
-            background: #1e1e1e;
+            height: 100%;
+            border: none;
+            z-index: 0;
+        }
+        .overlay {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.5);
             color: white;
-            border: 1px solid #444;
-            border-radius: 5px;
-            padding: 10px;
+            padding: 20px;
+            border-radius: 10px;
+            z-index: 1;
+            font-family: Arial, sans-serif;
+            font-size: 1.5em;
+            text-align: right;
         }
     </style>
     <script>
-        function updateTime() {
+        function updateClock() {
             var now = new Date();
             var indiaTime = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
             document.getElementById('local-time').textContent = now.toLocaleTimeString();
             document.getElementById('india-time').textContent = indiaTime.toLocaleTimeString();
             document.getElementById('today-date').textContent = now.toDateString();
         }
-
-        function rotateFunFact() {
-            var facts = [
-                "Honey never spoils. Archaeologists found 3,000-year-old honey that was still edible.",
-                "Bananas are berries, but strawberries are not.",
-                "Octopuses have three hearts.",
-                "The Eiffel Tower can be 15 cm taller during hot days.",
-                "A group of flamingos is called a flamboyance.",
-                "There are more stars in the universe than grains of sand on Earth."
-            ];
-            var fact = facts[Math.floor(Math.random() * facts.length)];
-            document.getElementById("fun-fact").textContent = fact;
-        }
-
-        setInterval(updateTime, 1000);
-        window.onload = function() {
-            updateTime();
-            rotateFunFact();
-        };
+        setInterval(updateClock, 1000);
+        window.onload = updateClock;
     </script>
 </head>
 <body>
-    <div class="section">
-        <h2>🕒 Time</h2>
-        <div class="clock-box">Local Time: <span id="local-time"></span></div>
-        <div class="clock-box">India Time: <span id="india-time"></span></div>
-    </div>
-
-    <div class="section">
-        <h2>📅 Today’s Date</h2>
-        <div class="clock-box" id="today-date"></div>
-    </div>
-
-    <div class="section">
-        <h2>🗒️ Personal Notes</h2>
-        <textarea placeholder="Write your notes here..."></textarea>
-    </div>
-
-    <div class="section">
-        <h2>⚽ Soccer News Links</h2>
-        <ul>
-            <li><a href="https://www.bbc.com/sport/football" target="_blank">BBC Football</a></li>
-            <li><a href="https://www.goal.com/en" target="_blank">Goal.com</a></li>
-            <li><a href="https://www.espn.com/soccer/" target="_blank">ESPN Soccer</a></li>
-        </ul>
-    </div>
-
-    <div class="section">
-        <h2>📰 Local News</h2>
-        <ul>
-            <li><a href="https://www.kansascity.com/" target="_blank">Kansas City Star</a></li>
-            <li><a href="https://fox4kc.com/" target="_blank">FOX 4 KC</a></li>
-            <li><a href="https://www.kmbc.com/" target="_blank">KMBC 9 News</a></li>
-        </ul>
-    </div>
-
-    <div class="section">
-        <h2>🌤️ Weather Forecast</h2>
-        <p><a href="https://wttr.in" target="_blank">View simple text weather at wttr.in</a></p>
-    </div>
-
-    <div class="section">
-        <h2>💡 Fun Fact</h2>
-        <p id="fun-fact">Loading fun fact...</p>
+    <iframe src="https://www.bing.com"></iframe>
+    <div class="overlay">
+        <div id="today-date"></div>
+        <div>Local: <span id="local-time"></span></div>
+        <div>India: <span id="india-time"></span></div>
     </div>
 </body>
 </html>
